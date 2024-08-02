@@ -115,7 +115,7 @@ func rot13(r rune) rune {
 func addLabel(img *image.RGBA, x, y int, label string) {
 	d := &font.Drawer{
 		Dst:  img,
-		Src:  image.NewUniform(color.RGBA{255, 255, 255, 255}),
+		Src:  image.NewUniform(color.RGBA{255, 0, 0, 255}),
 		Face: basicfont.Face7x13,
 		Dot:  fixed.Point26_6{fixed.I(x), fixed.I(y)},
 	}
@@ -193,13 +193,16 @@ func lock(dest string) {
 	bounds := barcode.Bounds()
 	bounds.Max.Y = 2 * bounds.Max.Y
 	dst := image.NewRGBA(bounds)
-	draw.Draw(dst, dst.Bounds(), barcode, image.Point{}, draw.Src)
+	// Set image to all white
+	draw.Draw(dst, bounds, &image.Uniform{color.RGBA{255,255,255,255}}, image.ZP, draw.Src)
+	// Stick the barcode at the top
+	draw.Draw(dst, barcode.Bounds(), barcode, image.Point{}, draw.Src)
 
 	// Now draw some text
-	addLabel(dst, 0, bounds.Max.Y-65, "This barcode represents a combination that has been loaded into")
-	addLabel(dst, 0, bounds.Max.Y-45, "a safe similar to the one at https://bdsm.spuddy.org/writings/Safe_v3/")
-	addLabel(dst, 0, bounds.Max.Y-25, "using software from https://github.com/bdsm-spuddy/chaster-picture-safe/")
-	addLabel(dst, 0, bounds.Max.Y-5, "This is a pretty strong solution, stronger than a realtor lock!")
+	addLabel(dst, 5, bounds.Max.Y-70, "This barcode represents a combination that has been loaded into")
+	addLabel(dst, 5, bounds.Max.Y-50, "a safe similar to the one at https://bdsm.spuddy.org/writings/Safe_v3/")
+	addLabel(dst, 5, bounds.Max.Y-30, "using software from https://github.com/bdsm-spuddy/chaster-picture-safe/")
+	addLabel(dst, 5, bounds.Max.Y-10, "This is a pretty strong solution, stronger than a realtor lock!")
 
 	// Save the new image
 	f, err := os.OpenFile(dest, os.O_RDWR|os.O_CREATE|os.O_EXCL, 0644)
