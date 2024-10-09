@@ -34,6 +34,8 @@ right result.
 This means that if you accidentally look at the image you won't know
 what the safe password is.
 
+!(testlock.jpg)
+
 You can then upload this image to Chaster and delete it.
 
 At the end of the session the image can be viewed and downloaded, and
