@@ -34,7 +34,7 @@ right result.
 This means that if you accidentally look at the image you won't know
 what the safe password is.
 
-!(testlock.jpg)
+![testlock image](testlock.jpg)
 
 You can then upload this image to Chaster and delete it.
 
